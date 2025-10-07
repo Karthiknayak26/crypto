@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Cryptography Experiment</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1a1a2e 100%);
+      background-size: 400% 400%;
+      animation: gradient-shift 15s ease infinite;
+      font-family: 'Courier New', 'Consolas', monospace;
+      color: #00ff88;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradient-shift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Animated matrix-style background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 136, 0.03) 2px, rgba(0, 255, 136, 0.03) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 255, 136, 0.03) 2px, rgba(0, 255, 136, 0.03) 4px);
+      animation: grid-flow 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes grid-flow {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      100% {
+        transform: translate(40px, 40px);
+      }
+    }
+
+    /* Floating encryption symbols */
+    body::after {
+      content: '🔐 🔑 🛡️ 🔒 ⚡ 🔐 🔑 🛡️';
+      position: absolute;
+      top: -50px;
+      left: 0;
+      width: 100%;
+      font-size: 40px;
+      opacity: 0.1;
+      animation: float-symbols 30s linear infinite;
+      pointer-events: none;
+      letter-spacing: 100px;
+    }
+
+    @keyframes float-symbols {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.1;
+      }
+
+      90% {
+        opacity: 0.1;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .welcome-container {
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(0, 255, 136, 0.3),
+        inset 0 0 60px rgba(0, 255, 136, 0.05);
+      max-width: 600px;
+      width: 90%;
+      border: 2px solid rgba(0, 255, 136, 0.3);
+      position: relative;
+      animation: container-entrance 1s ease-out, container-glow 3s ease-in-out infinite;
+      overflow: hidden;
+    }
+
+    @keyframes container-entrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(50px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes container-glow {
+
+      0%,
+      100% {
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(0, 255, 136, 0.3),
+          inset 0 0 60px rgba(0, 255, 136, 0.05);
+      }
+
+      50% {
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.5),
+          0 0 60px rgba(0, 255, 136, 0.5),
+          inset 0 0 80px rgba(0, 255, 136, 0.1);
+      }
+    }
+
+    /* Animated corner accents */
+    .welcome-container::before,
+    .welcome-container::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #00ff88;
+      animation: corner-pulse 2s ease-in-out infinite;
+    }
+
+    .welcome-container::before {
+      top: 10px;
+      left: 10px;
+      border-right: none;
+      border-bottom: none;
+      animation-delay: 0s;
+    }
+
+    .welcome-container::after {
+      bottom: 10px;
+      right: 10px;
+      border-left: none;
+      border-top: none;
+      animation-delay: 1s;
+    }
+
+    @keyframes corner-pulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    .welcome-container h1 {
+      color: #00ff88;
+      margin-bottom: 20px;
+      font-size: 2.8em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow:
+        0 0 10px rgba(0, 255, 136, 0.8),
+        0 0 20px rgba(0, 255, 136, 0.5),
+        0 0 30px rgba(0, 255, 136, 0.3);
+      animation: title-glow 2s ease-in-out infinite, title-entrance 1s ease-out;
+      position: relative;
+    }
+
+    @keyframes title-entrance {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+        letter-spacing: 10px;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 3px;
+      }
+    }
+
+    @keyframes title-glow {
+
+      0%,
+      100% {
+        text-shadow:
+          0 0 10px rgba(0, 255, 136, 0.8),
+          0 0 20px rgba(0, 255, 136, 0.5),
+          0 0 30px rgba(0, 255, 136, 0.3);
+      }
+
+      50% {
+        text-shadow:
+          0 0 20px rgba(0, 255, 136, 1),
+          0 0 30px rgba(0, 255, 136, 0.8),
+          0 0 40px rgba(0, 255, 136, 0.5);
+      }
+    }
+
+    /* Animated underline for h1 */
+    .welcome-container h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00ff88, transparent);
+      animation: underline-expand 1.5s ease-out 0.5s forwards;
+    }
+
+    @keyframes underline-expand {
+      0% {
+        width: 0;
+      }
+
+      100% {
+        width: 80%;
+      }
+    }
+
+    .welcome-container p {
+      font-size: 1.3em;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      color: #00d4aa;
+      text-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
+      animation: text-fade-in 1s ease-out 0.3s backwards;
+    }
+
+    @keyframes text-fade-in {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .welcome-container p:first-of-type {
+      font-weight: bold;
+      font-size: 1.4em;
+      color: #00ff88;
+    }
+
+    .loading-spinner {
+      border: 5px solid rgba(0, 255, 136, 0.2);
+      border-top: 5px solid #00ff88;
+      border-right: 5px solid #00d4aa;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite, spinner-glow 2s ease-in-out infinite;
+      margin: 30px auto;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spinner-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(0, 255, 136, 0.8);
+      }
+    }
+
+    /* Inner spinner ring for extra effect */
+    .loading-spinner::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border: 3px solid transparent;
+      border-bottom: 3px solid #00ff88;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite reverse;
+    }
+
+    .loading-spinner::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px;
+      height: 8px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+      animation: pulse-center 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-center {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0.5;
+      }
+    }
+
+    /* Binary code animation in background */
+    .welcome-container>p:last-child {
+      position: relative;
+      animation: text-fade-in 1s ease-out 0.6s backwards;
+    }
+
+    /* Typing cursor effect */
+    .welcome-container>p:last-child::after {
+      content: '▊';
+      display: inline-block;
+      margin-left: 5px;
+      animation: cursor-blink 1s step-end infinite;
+      color: #00ff88;
+    }
+
+    @keyframes cursor-blink {
+
+      0%,
+      50% {
+        opacity: 1;
+      }
+
+      51%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* Scan line effect */
+    .welcome-container::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(0, 255, 136, 0.5),
+          rgba(0, 255, 136, 0.8),
+          rgba(0, 255, 136, 0.5),
+          transparent);
+      animation: scan-line 4s linear infinite;
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+      z-index: 1;
+    }
+
+    @keyframes scan-line {
+      0% {
+        top: -10%;
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .welcome-container {
+        padding: 40px 30px;
+      }
+
+      .welcome-container h1 {
+        font-size: 2em;
+        letter-spacing: 2px;
+      }
+
+      .welcome-container p {
+        font-size: 1.1em;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .welcome-container h1 {
+        font-size: 1.6em;
+        letter-spacing: 1px;
+      }
+
+      .welcome-container p {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="welcome-container">
+    <h1>Welcome to the Cryptography Experiment!</h1>
+    <p>Implementing a Secure Login System using Hash + Salt</p>
+    <div class="loading-spinner"></div>
+    <p>Loading experiment details...</p>
+  </div>
+
+  <script>
+    // Redirect to index.html after 3 seconds
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 5000);
+  </script>
+</body>
+
+</html>
